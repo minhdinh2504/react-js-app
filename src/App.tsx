@@ -1,13 +1,18 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
+import Home from './pages/customer/Home'
+import Contact from './pages/customer/Contact'
+import About from './pages/customer/About'
 
 function App() {
   return (
-    <>
-      <h1 className='text-2xl font-bold'>Hello World</h1>
-      <FontAwesomeIcon icon={faCalendar} />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
