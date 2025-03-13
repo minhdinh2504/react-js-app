@@ -6,6 +6,7 @@ import About from './pages/customer/About'
 import CustomerLayout from './shared/layouts/CustomerLayout'
 import Dashboard from './pages/admin/Dashboard'
 import AdminLayout from './shared/layouts/AdminLayout'
+import CategoryList from './pages/admin/category/CategoryList'
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Route path="/contact" element={<CustomerLayout><Contact /></CustomerLayout>} />
 
         {/* Admin Routing */}
-        <Route path="/admin/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
+        <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
+        <Route path="/category" element={<AdminLayout><CategoryList /></AdminLayout>} />
 
       </Routes>
     </BrowserRouter>

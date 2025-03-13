@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
+    const [menuItems, setMenuItems] = useState([
+        { id: 1, name: 'Category Management', icon: faCheckCircle, link: '/category' },
+        { id: 2, name: 'User Management', icon: faUser, link: '/user' },
+        { id: 3, name: 'Role Management', icon: faUserShield, link: '/role' },
+    ]);
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
@@ -40,18 +45,12 @@ const Sidebar = () => {
                 </Link>
             </div>
             <div className="sidebar-menu flex-grow">
-                <Link to={"/manage/quiz"} className="border-b border-slate-100 flex items-center hover:bg-[#33adff] hover:text-white">
-                    <FontAwesomeIcon icon={faCheckCircle} className="p-4 min-w-4" />
-                    <span className={`${isExpanded ? "block" : "hidden"}`}>Todo Management</span>
-                </Link>
-                <Link to={"/manage/quiz"} className="border-b border-slate-100 flex items-center hover:bg-[#33adff] hover:text-white">
-                    <FontAwesomeIcon icon={faUser} className="p-4 min-w-4" />
-                    <span className={`${isExpanded ? "block" : "hidden"}`}>User Management</span>
-                </Link>
-                <Link to={"/manage/quiz"} className="border-b border-slate-100 flex items-center hover:bg-[#33adff] hover:text-white">
-                    <FontAwesomeIcon icon={faUserShield} className="p-4 min-w-4" />
-                    <span className={`${isExpanded ? "block" : "hidden"}`}>Role Management</span>
-                </Link>
+                {menuItems.map((item: any) => (
+                    <Link key={item.id} to={item.link} className="border-b border-slate-100 flex items-center hover:bg-[#33adff] hover:text-white">
+                        <FontAwesomeIcon icon={item.icon} className="p-4 min-w-4" />
+                        <span className={`${isExpanded ? "block" : "hidden"}`}>{item.name}</span>
+                    </Link>
+                ))}
             </div>
             <div className="sidebar-bottom flex justify-end">
                 <button type="button" onClick={toggleSidebar} className="whitespace-nowrap  items-center" title="Toggle Sidebar">
