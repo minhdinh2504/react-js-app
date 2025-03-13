@@ -2,22 +2,32 @@ import { useState } from 'react';
 import Avatar from '../../assets/avatars/avatar-1.png';
 import Logo from '../../assets/logo.png';
 import { Link, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
     const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
+    const [isShowMainMenu, setIsShowMainMenu] = useState<boolean>(false);
 
     const toggleProfile = () => {
         setIsShowProfile(!isShowProfile);
     };
 
+    const toggleMainMenu = () => {
+        setIsShowMainMenu(!isShowMainMenu);
+    };
+
     return (
-        <header className='bg-white shadow-md'>
+        <header className='bg-white shadow-md relative'>
             <nav className='navbar w-4/5 m-auto flex justify-between items-center'>
+                <button type="button" title='Toggle Sidebar' className='md:hidden' onClick={toggleMainMenu}>
+                    <FontAwesomeIcon icon={faBars} className='text-2xl' />
+                </button>
                 <Link to='/' className='flex gap-4 items-center'>
                     <img src={Logo} alt="Logo" className='w-14' />
                     <span className='text-2xl font-bold'>Todo App</span>
                 </Link>
-                <div className='flex justify-center items-center *:block *:p-5 *:hover:bg-[#33adff] *:hover:text-white'>
+                <div className={`md:flex justify-center items-center *:block *:p-5 *:hover:bg-[#33adff] *:hover:text-white ${isShowMainMenu ? 'block absolute top-full left-0 w-full bg-slate-50 *:border-b *:border-slate-200' : 'hidden'}`}>
                     <NavLink to="/" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Home</NavLink>
                     <NavLink to="/dashboard" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Dashboard</NavLink>
                     <NavLink to="/about" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>About</NavLink>
