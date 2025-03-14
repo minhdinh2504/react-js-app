@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
     const [menuItems, setMenuItems] = useState([
-        { id: 1, name: 'Category Management', icon: faCheckCircle, link: '/category' },
+        { id: 1, name: 'Category Management', icon: faCheckCircle, link: '/admin/category' },
         { id: 2, name: 'User Management', icon: faUser, link: '/user' },
         { id: 3, name: 'Role Management', icon: faUserShield, link: '/role' },
     ]);

@@ -29,7 +29,7 @@ const Header = () => {
                 </Link>
                 <div className={`md:flex justify-center items-center *:block *:p-5 *:hover:bg-[#33adff] *:hover:text-white ${isShowMainMenu ? 'block absolute top-full left-0 w-full bg-slate-50 *:border-b *:border-slate-200' : 'hidden'}`}>
                     <NavLink to="/" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Home</NavLink>
-                    <NavLink to="/dashboard" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Dashboard</NavLink>
+                    <NavLink to="/admin" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Dashboard</NavLink>
                     <NavLink to="/about" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>About</NavLink>
                     <NavLink to="/contact" className={({ isActive }) => `${isActive ? "bg-[#33adff] text-white" : ""}`}>Contact</NavLink>
                 </div>

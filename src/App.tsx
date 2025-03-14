@@ -12,14 +12,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Customer */}
+        <Route path='/' element={<CustomerLayout />}>
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+        {/* Admin */}
+        <Route path='admin' element={<AdminLayout />}>
+          <Route index={true} element={<Dashboard />} />
+          <Route path='category' element={<CategoryList />} />
+        </Route>
         {/* Customer Routing */}
-        <Route path="/" element={<CustomerLayout><Home /></CustomerLayout>} />
-        <Route path="/about" element={<CustomerLayout><About /></CustomerLayout>} />
-        <Route path="/contact" element={<CustomerLayout><Contact /></CustomerLayout>} />
+        {/* <Route path="/" element={<CustomerLayout><Home /></CustomerLayout>} /> */}
+        {/* <Route path="/about" element={<CustomerLayout><About /></CustomerLayout>} /> */}
+        {/* <Route path="/contact" element={<CustomerLayout><Contact /></CustomerLayout>} /> */}
 
         {/* Admin Routing */}
-        <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
-        <Route path="/category" element={<AdminLayout><CategoryList /></AdminLayout>} />
+        {/* <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} /> */}
+        {/* <Route path="/category" element={<AdminLayout><CategoryList /></AdminLayout>} /> */}
 
       </Routes>
     </BrowserRouter>
