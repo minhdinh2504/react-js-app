@@ -1,104 +1,71 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import CategoryDetails from "./CategoryDetails";
+import { useEffect, useState } from 'react'
+
+interface ICategory {
+  id: number,
+  name: string,
+  createdAt: string,
+}
 
 const CategoryList = () => {
-    const [categories, setCategories] = useState([]);
-    const [isShowDetail, setIsShowDetail] = useState(false);
+  // State of component - Noi luu tru du lieu trong component
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
-    const apiUrl = 'http://localhost:5176/api/v1/categories';
+  // Call data from api server
+  // Side effect
+  // Asynchronous
+  // setTimeout, fetch
 
-    const fetchData = () => {
-        axios.get(apiUrl)
-            .then(response => {
-                setCategories(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
+  const getCategories = async () => {
+    const response = await fetch(import.meta.env.VITE_API_SERVER + "categories");
+    const data = await response.json();
+    // console.log(data);
+    setCategories(data);
+  }
 
-    const editItem = (id) => {
-        console.log(id);
-        setIsShowDetail(true);
-        console.log(isShowDetail);
-    }
+  useEffect(() => {
+    getCategories();
+  }, [])
 
-    const deleteItem = (id) => {
-        axios.delete(apiUrl + `/${id}`)
-            .then(response => {
-                console.log(response);
-                if (response) {
-                    fetchData();
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+  return (
+    <section>
+      <h1 className="text-3xl">Categories list</h1>
 
-    }
+      <div className="overflow-x-auto rounded-lg border border-gray-200">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead className="ltr:text-left rtl:text-right">
+            <tr>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">ID</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Action</th>
+            </tr>
+          </thead>
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+          <tbody className="divide-y divide-gray-200">
+            {categories.map((cat) =>
+              <tr>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{cat.id}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{cat.name}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{cat.createdAt}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <button className="group relative inline-block focus:ring-3 focus:outline-hidden">
+                    <span
+                      className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                    ></span>
 
-    return (
-        <section>
-            <div className="card bg-white rounded-md shadow-md mb-4">
-                <div className="card-header p-4">
-                    <h1 className="text-2xl font-bold">Category Management</h1>
-                </div>
-                <div className="card-body p-4 border-y border-gray-200">
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="text-left *:border *:border-gray-200 *:p-2">
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Created At</th>
-                                <th>Created By</th>
-                                <th>Updated At</th>
-                                <th>Updated By</th>
-                                <th>Active</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {categories.map((category, index) => (
-                                <tr key={category.id} className="text-left *:border *:border-gray-200 *:p-2">
-                                    <td>{index + 1}</td>
-                                    <td>{category.name}</td>
-                                    <td>{category.description}</td>
-                                    <td>{category.createdAt}</td>
-                                    <td>{category.createdBy}</td>
-                                    <td>{category.updatedAt}</td>
-                                    <td>{category.updatedBy}</td>
-                                    <td>{category.isActive ? "Yes" : "No"}</td>
-                                    <td>
-                                        <div className="flex space-x-2 *:cursor-pointer *:border-0">
-                                            <button type="button" title="Edit" onClick={() => editItem(category.id)}>
-                                                <FontAwesomeIcon icon={faEdit} className="text-[#33adff]" />
-                                            </button>
-                                            <button type="button" title="Delete" onClick={() => deleteItem(category.id)}>
-                                                <FontAwesomeIcon icon={faTrash} className="text-red-500" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="card-footer p-4">
-                    Pagination
-                </div>
-            </div>
-
-            {isShowDetail && <CategoryDetails />}
-        </section>
-
-    )
+                    <span
+                      className="relative inline-block border-2 border-current px-8 py-3 text-sm font-bold tracking-widest text-black uppercase"
+                    >
+                      Edit
+                    </span>
+                  </button>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
 }
 export default CategoryList;
