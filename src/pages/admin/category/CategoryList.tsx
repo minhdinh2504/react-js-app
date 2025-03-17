@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import CategoryForm from './CategoryForm';
 
 interface ICategory {
   id: number,
@@ -9,11 +10,6 @@ interface ICategory {
 const CategoryList = () => {
   // State of component - Noi luu tru du lieu trong component
   const [categories, setCategories] = useState<ICategory[]>([]);
-
-  // Call data from api server
-  // Side effect
-  // Asynchronous
-  // setTimeout, fetch
 
   const getCategories = async () => {
     const response = await fetch(import.meta.env.VITE_API_SERVER + "categories");
@@ -29,7 +25,7 @@ const CategoryList = () => {
   return (
     <section>
       <h1 className="text-3xl">Categories list</h1>
-
+      <CategoryForm />
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="ltr:text-left rtl:text-right">
