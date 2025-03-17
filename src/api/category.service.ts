@@ -13,3 +13,6 @@ export const createCategory = async (data: ICategory) => {
 // Update
 
 // Delete
+export const deleteCategory = async (id: number) => {
+  return instance.delete("categories" + `/${id}`)
+}

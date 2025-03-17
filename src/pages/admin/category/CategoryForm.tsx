@@ -1,12 +1,17 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { createCategory } from '../../../api/category.service';
+import { useEffect } from 'react';
 
 type Inputs = {
   name: string
 }
 
-const CategoryForm = () => {
+type CategoryFormProps = {
+  onGetCategories: () => {}
+}
+
+const CategoryForm = ({ onGetCategories }: CategoryFormProps) => {
   const {
     register,
     handleSubmit,
@@ -21,6 +26,7 @@ const CategoryForm = () => {
       createdAt: new Date().toISOString()
     }
     await createCategory(newCategory);
+    onGetCategories()
   }
 
   return <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
