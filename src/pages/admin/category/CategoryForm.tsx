@@ -1,4 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import axios from 'axios';
+import { createCategory } from '../../../api/category.service';
 
 type Inputs = {
   name: string
@@ -18,15 +20,7 @@ const CategoryForm = () => {
       name,
       createdAt: new Date().toISOString()
     }
-    // console.log(newCategory);
-
-    const response = await fetch(import.meta.env.VITE_API_SERVER + "categories", {
-      method: "POST",
-      body: JSON.stringify(newCategory),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    await createCategory(newCategory);
   }
 
   return <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">

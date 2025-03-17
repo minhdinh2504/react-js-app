@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 import CategoryForm from './CategoryForm';
-
-interface ICategory {
-  id: number,
-  name: string,
-  createdAt: string,
-}
+import axios, { AxiosResponse } from 'axios';
+import instance from '../../../api/api.service';
+import { ICategory } from '../../../interfaces';
+import { getCategory } from '../../../api/category.service';
 
 const CategoryList = () => {
   // State of component - Noi luu tru du lieu trong component
   const [categories, setCategories] = useState<ICategory[]>([]);
 
   const getCategories = async () => {
-    const response = await fetch(import.meta.env.VITE_API_SERVER + "categories");
-    const data = await response.json();
-    // console.log(data);
+    const data = await getCategory()
     setCategories(data);
   }
 
