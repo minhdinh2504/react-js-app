@@ -5,7 +5,7 @@ import { deleteCategory } from "../../../api/category.service";
 type CategoryItemProps = {
   category: ICategory,
   onGetCategories: () => {},
-  onUpdateCategory: () => {},
+  onUpdateCategory?: () => void,
 }
 
 const CategoryItem = ({ category, onGetCategories, onUpdateCategory }: CategoryItemProps) => {
