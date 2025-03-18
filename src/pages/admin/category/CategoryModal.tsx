@@ -1,12 +1,43 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
+import { getCategoryById, updateCategory } from "../../../api/category.service";
+import { ICategory } from "../../../interfaces";
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 type CategoryModalProps = {
-  onClose: () => void
+  onClose: () => void,
+  id: number
 }
 
-const CategoryModal = ({ onClose }: CategoryModalProps) => {
+type Inputs = {
+  name: string,
+  createdAt: string
+}
+
+const CategoryModal = ({ onClose, id }: CategoryModalProps) => {
+  const [category, setCategory] = useState<ICategory>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
+
+  const submitForm: SubmitHandler<Inputs> = async (data) => {
+    // console.log(data);
+    await updateCategory(id, data)
+    onClose()
+  }
+
+  const fetchCategoryById = async () => {
+    const data = await getCategoryById(id)
+    setCategory(data)
+  }
+
+  useEffect(() => {
+    fetchCategoryById()
+  }, [])
+
+  useEffect(() => {
+    reset(category)
+  }, [category])
+
   return <div className="bg-gray-300/70 top-0 h-full w-full absolute flex justify-center items-center">
-    <div className="relative rounded-lg border border-gray-200 shadow-lg opacity-100 bg-white">
+    <div className="w-1/2 relative rounded-lg border border-gray-200 shadow-lg opacity-100 bg-white p-4">
       <button onClick={onClose}
         className="absolute -end-1 -top-1 rounded-full border border-gray-300 bg-gray-100 p-1">
         <span className="sr-only">Close</span>
@@ -18,22 +49,42 @@ const CategoryModal = ({ onClose }: CategoryModalProps) => {
           />
         </svg>
       </button>
-
-      <div className="flex items-center gap-4 p-4">
-        <img
-          alt=""
-          src="https://images.unsplash.com/photo-1611432579699-484f7990b127?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-          className="size-12 rounded-lg object-cover"
-        />
-
+      <form onSubmit={handleSubmit(submitForm)} className="mx-auto mt-8 mb-0 max-w-md space-y-4">
+        <h1 className="text-xl">Cập nhật category</h1>
         <div>
-          <p className="font-medium text-gray-900">Carol Daines</p>
+          <label htmlFor="email" className="sr-only">Tên danh mục</label>
 
-          <p className="line-clamp-1 text-sm text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet, laborum?
-          </p>
+          <div className="relative">
+            <input
+              {...register("name", { required: true })}
+              type="text"
+              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
+              placeholder="Nhập vào tên danh mục"
+            />
+          </div>
         </div>
-      </div>
+        <div>
+          <label htmlFor="email" className="sr-only">Tên danh mục</label>
+
+          <div className="relative">
+            <input
+              {...register("createdAt", { required: true })}
+              type="text"
+              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
+              placeholder="Created at"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <button
+            type="submit"
+            className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+          >
+            Thêm mới
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 }

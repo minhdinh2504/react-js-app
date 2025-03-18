@@ -10,15 +10,23 @@ import CategoryModal from './CategoryModal';
 const CategoryList = () => {
   // State of component - Noi luu tru du lieu trong component
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [openModal, setOpenModal] = useState<boolean>(true)
+  // const [openModal, setOpenModal] = useState<boolean>(true)
+  const [updateCatId, setUpdateCatId] = useState<number | null>()
 
   const getCategories = async () => {
     const data = await getCategory()
     setCategories(data);
   }
 
-  const updateCategory = () => {
-    setOpenModal(true)
+  const updateCategory = (id?: number) => {
+    if (id) {
+      setUpdateCatId(id)
+    }
+  }
+
+  const closeModal = () => {
+    setUpdateCatId(null);
+    getCategories()
   }
 
   useEffect(() => {
@@ -41,11 +49,11 @@ const CategoryList = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {categories.map((cat) => <CategoryItem onUpdateCategory={updateCategory} onGetCategories={getCategories} category={cat} />)}
+            {categories.map((cat) => <CategoryItem onUpdateCategory={() => updateCategory(cat.id)} onGetCategories={getCategories} category={cat} />)}
           </tbody>
         </table>
       </div>
-      {openModal && <CategoryModal onClose={() => setOpenModal(false)} />}
+      {updateCatId && <CategoryModal id={updateCatId} onClose={closeModal} />}
     </section>
   )
 }
