@@ -5,14 +5,29 @@ import instance from '../../../api/api.service';
 import { ICategory } from '../../../interfaces';
 import { getCategory } from '../../../api/category.service';
 import CategoryItem from './CategoryItem';
+import CategoryModal from './CategoryModal';
 
 const CategoryList = () => {
   // State of component - Noi luu tru du lieu trong component
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [updateID, setUpdateID] = useState<number>();
 
   const getCategories = async () => {
     const data = await getCategory()
     setCategories(data);
+  }
+
+  const updateCatrgories = async (id?: number) => {
+    if (id) {
+      setOpenModal(true);
+      setUpdateID(id);
+    }
+  }
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+    getCategories();
   }
 
   useEffect(() => {
@@ -20,7 +35,7 @@ const CategoryList = () => {
   }, [])
 
   return (
-    <section>
+    <section className='relative'>
       <h1 className="text-3xl">Categories list</h1>
       <CategoryForm onGetCategories={getCategories} />
       <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -35,10 +50,11 @@ const CategoryList = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {categories.map((cat) => <CategoryItem onGetCategories={getCategories} category={cat} />)}
+            {categories.map((cat) => <CategoryItem onUpdateCategory={() => updateCatrgories(cat.id)} onGetCategories={getCategories} category={cat} />)}
           </tbody>
         </table>
       </div>
+      {openModal && <CategoryModal onClose={onCloseModal} id={updateID} />}
     </section>
   )
 }

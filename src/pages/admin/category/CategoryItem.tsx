@@ -4,10 +4,11 @@ import { deleteCategory } from "../../../api/category.service";
 
 type CategoryItemProps = {
   category: ICategory,
-  onGetCategories: () => {}
+  onGetCategories: () => {},
+  onUpdateCategory: () => {},
 }
 
-const CategoryItem = ({ category, onGetCategories }: CategoryItemProps) => {
+const CategoryItem = ({ category, onGetCategories, onUpdateCategory }: CategoryItemProps) => {
   const onDeleteCategory = async (id?: number) => {
     if (id) {
       await deleteCategory(id)
@@ -20,7 +21,8 @@ const CategoryItem = ({ category, onGetCategories }: CategoryItemProps) => {
     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{category.name}</td>
     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{category.createdAt}</td>
     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-      <button className="group relative inline-block focus:ring-3 focus:outline-hidden">
+      <button onClick={onUpdateCategory}
+        className="group relative inline-block focus:ring-3 focus:outline-hidden">
         <span
           className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
         ></span>
