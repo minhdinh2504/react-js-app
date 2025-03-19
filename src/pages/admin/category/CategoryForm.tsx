@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import axios from 'axios';
 import { createCategory } from '../../../api/category.service';
-import { useEffect } from 'react';
+import AlertContext from '../../../context/AlertContext';
+import { useContext } from 'react';
 
 type Inputs = {
   name: string
@@ -12,6 +12,9 @@ type CategoryFormProps = {
 }
 
 const CategoryForm = ({ onGetCategories }: CategoryFormProps) => {
+  const alert = useContext(AlertContext)
+  console.log(alert);
+
   const {
     register,
     handleSubmit,
@@ -26,6 +29,7 @@ const CategoryForm = ({ onGetCategories }: CategoryFormProps) => {
       createdAt: new Date().toISOString()
     }
     await createCategory(newCategory);
+    alert?.success("Thêm mới thành công");
     onGetCategories()
   }
 

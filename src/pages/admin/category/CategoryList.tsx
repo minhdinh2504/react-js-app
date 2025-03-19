@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import CategoryForm from './CategoryForm';
-import axios, { AxiosResponse } from 'axios';
-import instance from '../../../api/api.service';
 import { ICategory } from '../../../interfaces';
 import { getCategory } from '../../../api/category.service';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryModal';
+import AlertContext from '../../../context/AlertContext';
 
 const CategoryList = () => {
   // State of component - Noi luu tru du lieu trong component
   const [categories, setCategories] = useState<ICategory[]>([]);
   // const [openModal, setOpenModal] = useState<boolean>(true)
   const [updateCatId, setUpdateCatId] = useState<number | null>()
+  const alert = useContext(AlertContext);
 
   const getCategories = async () => {
     const data = await getCategory()
@@ -26,6 +26,7 @@ const CategoryList = () => {
 
   const closeModal = () => {
     setUpdateCatId(null);
+    alert?.success("Cập nhật category thành công")
     getCategories()
   }
 
