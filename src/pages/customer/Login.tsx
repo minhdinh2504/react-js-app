@@ -16,6 +16,8 @@ const Login = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const res = await login(data)
     const { accessToken, user } = res;
+    console.log(user);
+    
     localStorage.setItem("myToken", accessToken);
     alert?.success("Đăng nhập thành công!")
   }

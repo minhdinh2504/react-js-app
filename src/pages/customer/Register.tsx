@@ -1,5 +1,13 @@
 import React from "react";
 
+type RegisterInputs = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  passwordConfirm: string
+}
+
 const Register = () => {
   return < section className="bg-white" >
     <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
