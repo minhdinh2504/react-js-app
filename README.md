@@ -52,3 +52,7 @@ export default tseslint.config({
   },
 })
 ```
+
+<!-- Use context -->
+### Alert context
+REF: https://dev.to/doylecodes/making-alerts-for-a-web-app-41d6
