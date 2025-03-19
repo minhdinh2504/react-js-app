@@ -9,6 +9,7 @@ import AdminLayout from './shared/layouts/AdminLayout'
 import CategoryList from './pages/admin/category/CategoryList'
 import AlertContext, { AlertProvider } from './context/AlertContext'
 import Alert from './shared/components/Alert'
+import Login from './pages/customer/Login'
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
           </Route>
+          {/* Guest */}
+          <Route path='login' element={<Login />} />
           {/* Admin */}
           <Route path='admin' element={<AdminLayout />}>
             <Route index={true} element={<Dashboard />} />

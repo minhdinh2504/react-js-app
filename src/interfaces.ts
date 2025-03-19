@@ -4,3 +4,9 @@ export interface ICategory {
   name: string,
   createdAt: string,
 }
+
+export interface IUser {
+  id?: number,
+  email: string,
+  password?: string
+}
