@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import Avatar from '../../assets/avatars/avatar-1.png';
 import Logo from '../../assets/logo.png';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import UserContext from '../../context/UserContext';
@@ -10,6 +10,7 @@ const Header = () => {
   const [isShowProfile, setIsShowProfile] = useState<boolean>(false);
   const [isShowMainMenu, setIsShowMainMenu] = useState<boolean>(false);
   const userStore = useContext(UserContext)
+  const navigate = useNavigate()
 
   const toggleProfile = () => {
     setIsShowProfile(!isShowProfile);
@@ -18,6 +19,19 @@ const Header = () => {
   const toggleMainMenu = () => {
     setIsShowMainMenu(!isShowMainMenu);
   };
+
+  const logout = () => {
+    const confirm = window.confirm("So you want to logout ?")
+    if (confirm) {
+      // Delete context
+      userStore?.setUser(undefined);
+      // Delete localstorage
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      navigate("/")
+    }
+
+  }
 
   return (
     <header className='bg-white shadow-md relative'>
@@ -47,7 +61,7 @@ const Header = () => {
             </div>
             <div className={`dropdown-item`}>
               {userStore?.user
-                ? <Link className='block w-full p-4 text-left hover:bg-red-500 hover:text-white hover:rounded-b-md cursor-pointer' to="/logout">Logout</Link>
+                ? <button onClick={logout} className='block w-full p-4 text-left hover:bg-red-500 hover:text-white hover:rounded-b-md cursor-pointer'>Logout</button>
                 : <Link className='block w-full p-4 text-left hover:bg-[#33adff] hover:text-white hover:rounded-b-md cursor-pointer' to="/login">Login</Link>
               }
             </div>
