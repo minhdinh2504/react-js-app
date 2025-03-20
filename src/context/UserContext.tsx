@@ -1,24 +1,23 @@
-import { useContext, createContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import { IUser } from '../interfaces';
 
 type UserContextType = {
   user?: IUser,
   setUser: (user?: IUser) => void
 }
+const defaultUser = JSON.parse(localStorage.getItem("user") || "{}") as IUser
 
-const defaultUser = JSON.parse(localStorage.getItem("user") ?? "{}") as IUser
+export const UserContext = createContext<UserContextType | null>(null);
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
-
-type UserProviderProps = {
-  children: React.ReactNode
+type UserProviderType = {
+  children: React.ReactNode;
 }
 
-export const UserProvider = ({ children }: UserProviderProps) => {
+const UserProvider = ({ children }: UserProviderType) => {
   const [user, setUser] = useState<IUser | undefined>(defaultUser)
   return <UserContext.Provider value={{ user, setUser }}>
     {children}
   </UserContext.Provider>
 }
 
-export default UserContext;
+export default UserProvider;

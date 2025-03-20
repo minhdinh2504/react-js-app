@@ -10,7 +10,7 @@ import CategoryList from './pages/admin/category/CategoryList'
 import AlertContext, { AlertProvider } from './context/AlertContext'
 import Alert from './shared/components/Alert'
 import Login from './pages/customer/Login'
-import { UserProvider } from './context/UserContext'
+import UserProvider from './context/UserContext'
 
 function App() {
   return (
@@ -34,7 +34,6 @@ function App() {
           </Routes>
         </AlertProvider>
       </UserProvider>
-
     </BrowserRouter>
   )
 }

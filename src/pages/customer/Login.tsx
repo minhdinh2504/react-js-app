@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { login } from "../../api/auth.service";
 import AlertContext from "../../context/AlertContext";
-import UserContext from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 type Inputs = {
   email: string,
@@ -13,6 +13,7 @@ type Inputs = {
 const Login = () => {
   const alert = useContext(AlertContext)
   const userStore = useContext(UserContext)
+
   const navigation = useNavigate()
   const { register, formState: { errors }, handleSubmit } = useForm<Inputs>()
 
@@ -26,7 +27,7 @@ const Login = () => {
     navigation("/")
   }
 
-  console.log(userStore);
+  console.log("userStore", userStore);
 
   return < section className="bg-white" >
     <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
