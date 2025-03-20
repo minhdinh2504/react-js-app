@@ -10,27 +10,31 @@ import CategoryList from './pages/admin/category/CategoryList'
 import AlertContext, { AlertProvider } from './context/AlertContext'
 import Alert from './shared/components/Alert'
 import Login from './pages/customer/Login'
+import { UserProvider } from './context/UserContext'
 
 function App() {
   return (
     <BrowserRouter>
-      <AlertProvider>
-        <Alert />
-        <Routes>
-          {/* Customer */}
-          <Route path='/' element={<CustomerLayout />}>
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-          </Route>
-          {/* Guest */}
-          <Route path='login' element={<Login />} />
-          {/* Admin */}
-          <Route path='admin' element={<AdminLayout />}>
-            <Route index={true} element={<Dashboard />} />
-            <Route path='category' element={<CategoryList />} />
-          </Route>
-        </Routes>
-      </AlertProvider>
+      <UserProvider>
+        <AlertProvider>
+          <Alert />
+          <Routes>
+            {/* Customer */}
+            <Route path='/' element={<CustomerLayout />}>
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
+            {/* Guest */}
+            <Route path='login' element={<Login />} />
+            {/* Admin */}
+            <Route path='admin' element={<AdminLayout />}>
+              <Route index={true} element={<Dashboard />} />
+              <Route path='category' element={<CategoryList />} />
+            </Route>
+          </Routes>
+        </AlertProvider>
+      </UserProvider>
+
     </BrowserRouter>
   )
 }
