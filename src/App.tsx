@@ -10,11 +10,16 @@ import CategoryList from './pages/admin/category/CategoryList'
 import AlertContext, { AlertProvider } from './context/AlertContext'
 import Alert from './shared/components/Alert'
 import Login from './pages/customer/Login'
+<<<<<<< HEAD
 import Register from './pages/customer/Register'
+=======
+import UserProvider from './context/UserContext'
+>>>>>>> 0559aeea2e284d2ac97f9333dd27e877da25a3c9
 
 function App() {
   return (
     <BrowserRouter>
+<<<<<<< HEAD
       <AlertProvider>
         <Alert />
         <Routes>
@@ -33,6 +38,27 @@ function App() {
           </Route>
         </Routes>
       </AlertProvider>
+=======
+      <UserProvider>
+        <AlertProvider>
+          <Alert />
+          <Routes>
+            {/* Customer */}
+            <Route path='/' element={<CustomerLayout />}>
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
+            {/* Guest */}
+            <Route path='login' element={<Login />} />
+            {/* Admin */}
+            <Route path='admin' element={<AdminLayout />}>
+              <Route index={true} element={<Dashboard />} />
+              <Route path='category' element={<CategoryList />} />
+            </Route>
+          </Routes>
+        </AlertProvider>
+      </UserProvider>
+>>>>>>> 0559aeea2e284d2ac97f9333dd27e877da25a3c9
     </BrowserRouter>
   )
 }
